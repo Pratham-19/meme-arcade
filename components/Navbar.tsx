@@ -5,11 +5,14 @@ import Link from "next/link";
 import { Coustard } from "next/font/google";
 import { usePathname } from "next/navigation";
 import { Button } from "./ui/button";
+import path from "path";
 
 const coustard = Coustard({ weight: "400", subsets: ["latin"] });
 
 export default function Navbar() {
 	const path = usePathname();
+	console.log(path);
+
 	return (
 		<div className={` bg-black w-full`}>
 			<div className="max-w-screen-2xl w-11/12 mx-auto py-4 flex items-center justify-between">
@@ -31,7 +34,7 @@ export default function Navbar() {
 						<Link
 							key={index}
 							className={`${
-								path === href
+								path.includes(href)
 									? "bg-pink border-none"
 									: "bg-none"
 							} mx-4 text-pearl px-8 py-2 rounded-lg border border-pearl/30 ${
