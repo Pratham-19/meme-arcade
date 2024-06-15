@@ -28,7 +28,7 @@ export default function Navbar() {
 					</Link>
 					{[
 						{ title: "creator", href: "/creator" },
-						{ title: "play", href: "/play" },
+						// { title: "play", href: "/play" },
 						{ title: "dashboard", href: "/dashboard" },
 					].map(({ title, href }, index) => (
 						<Link

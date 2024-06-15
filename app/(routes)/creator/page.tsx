@@ -10,7 +10,7 @@ import {
 import Image from "next/image";
 import Autoplay from "embla-carousel-autoplay";
 import { Button } from "@/components/ui/button";
-import OnboardCard from "@/components/OnboardCard";
+import Card from "@/components/Card";
 
 export default function page() {
 	return (
@@ -138,7 +138,7 @@ export default function page() {
 							type: "onboard",
 						},
 					].map((item, index) => (
-						<OnboardCard
+						<Card
 							key={index}
 							title={item.title}
 							image={item.image}
@@ -197,7 +197,7 @@ export default function page() {
 							type: "engage",
 						},
 					].map((item, index) => (
-						<OnboardCard
+						<Card
 							key={index}
 							title={item.title}
 							image={item.image}
@@ -254,7 +254,7 @@ export default function page() {
 							type: "degen",
 						},
 					].map((item, key) => (
-						<OnboardCard
+						<Card
 							key={key}
 							title={item.title}
 							image={item.image}
