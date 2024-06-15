@@ -301,7 +301,7 @@ export default function OnboardForm() {
 					</div>
 					<Button
 						type="submit"
-						className="w-fit rounded-lg text-lg font-medium h-12 bg-pink border-2 shadow-sm shadow-pink-800 border-pink-800 text-pink-800"
+						className="w-fit rounded-lg text-lg font-medium h-12 hover:bg-pink bg-pink border-2 shadow-sm shadow-pink-800 border-pink-800 text-pink-800"
 					>
 						Approve and Launch
 					</Button>

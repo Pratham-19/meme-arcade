@@ -15,8 +15,8 @@ import OnboardCard from "@/components/OnboardCard";
 export default function page() {
 	return (
 		<div className="flex flex-col gap-y-12 text-cream">
-			<div className="flex items-center ">
-				<div className="flex flex-col gap-y-2 pb-4 px-3 bg-pearl border-black border-4 rounded-md">
+			<div className="flex items-center h-fit">
+				<div className="flex flex-col h-fit gap-y-2 pb-4 px-3 bg-pearl border-black border-4 rounded-md">
 					<p className="text-lg font-bold py-2 text-purple-800 text-center">
 						Featured Games
 					</p>
@@ -115,12 +115,36 @@ export default function page() {
 						More Games
 					</Button>
 				</div>
-				<div className="p-6 bg-yellow-600-80a flex flex-wrap gap-x-4 rounded-b-lg">
-					<OnboardCard
-						title="The Flying Burd"
-						image="/flappyBird.png"
-						type="onboard"
-					/>
+				<div className="p-6 bg-yellow-600-80a flex w-full overflow-x-auto gap-x-4 rounded-b-lg">
+					{[
+						{
+							title: "The Flying Burd",
+							image: "/flappyBird.png",
+							type: "onboard",
+						},
+						{
+							title: "The Flying Burd",
+							image: "/flappyBird.png",
+							type: "onboard",
+						},
+						{
+							title: "The Flying Burd",
+							image: "/flappyBird.png",
+							type: "onboard",
+						},
+						{
+							title: "The Flying Burd",
+							image: "/flappyBird.png",
+							type: "onboard",
+						},
+					].map((item, index) => (
+						<OnboardCard
+							key={index}
+							title={item.title}
+							image={item.image}
+							type={item.type}
+						/>
+					))}
 				</div>
 			</div>
 
@@ -150,12 +174,36 @@ export default function page() {
 						More Games
 					</Button>
 				</div>
-				<div className="p-6 bg-yellow-600-80a flex flex-wrap gap-x-4 rounded-b-lg">
-					<OnboardCard
-						title="Racing Kars"
-						image="/carfighter.png"
-						type="engage"
-					/>
+				<div className="p-6 bg-yellow-600-80a w-full overflow-x-auto flex flex-wrap gap-x-4 rounded-b-lg">
+					{[
+						{
+							title: "Racing Kars",
+							image: "/carfighter.png",
+							type: "engage",
+						},
+						{
+							title: "Racing Kars",
+							image: "/carfighter.png",
+							type: "engage",
+						},
+						{
+							title: "Racing Kars",
+							image: "/carfighter.png",
+							type: "engage",
+						},
+						{
+							title: "Racing Kars",
+							image: "/carfighter.png",
+							type: "engage",
+						},
+					].map((item, index) => (
+						<OnboardCard
+							key={index}
+							title={item.title}
+							image={item.image}
+							type={item.type}
+						/>
+					))}
 				</div>
 			</div>
 
@@ -183,12 +231,36 @@ export default function page() {
 						More Games
 					</Button>
 				</div>
-				<div className="p-6 bg-yellow-600-80a flex flex-wrap gap-x-4 rounded-b-lg">
-					<OnboardCard
-						title="Made my day"
-						image="/poker.png"
-						type="degen"
-					/>
+				<div className="p-6 bg-yellow-600-80a w-full overflow-x-auto flex flex-wrap gap-x-4 rounded-b-lg">
+					{[
+						{
+							title: "Made my day",
+							image: "/poker.png",
+							type: "degen",
+						},
+						{
+							title: "Made my day",
+							image: "/poker.png",
+							type: "degen",
+						},
+						{
+							title: "Made my day",
+							image: "/poker.png",
+							type: "degen",
+						},
+						{
+							title: "Made my day",
+							image: "/poker.png",
+							type: "degen",
+						},
+					].map((item, key) => (
+						<OnboardCard
+							key={key}
+							title={item.title}
+							image={item.image}
+							type={item.type}
+						/>
+					))}
 				</div>
 			</div>
 		</div>
