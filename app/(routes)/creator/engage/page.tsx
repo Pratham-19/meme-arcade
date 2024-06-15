@@ -32,7 +32,7 @@ export default function page() {
 					</p>
 					<div className="flex gap-x-4">
 						<div className="bg-purple-600 px-4 py-2 w-fit">
-							🕹️ 100% earnings for Player
+							🕹️ 50% earnings for Player
 						</div>
 						<div className="bg-purple-600 px-4 py-2 w-fit">
 							🧊 40% to Liquidity Pool

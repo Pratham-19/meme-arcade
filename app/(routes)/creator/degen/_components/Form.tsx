@@ -13,17 +13,12 @@ import {
 	FormLabel,
 	FormMessage,
 } from "@/components/ui/form";
-import {
-	FileUploader,
-	FileUploaderContent,
-	FileUploaderItem,
-	FileInput,
-} from "@/components/ui/FileUploader";
 
 import { Input } from "@/components/ui/input";
 import { useRef, useState } from "react";
 import Image from "next/image";
 import { Textarea } from "@/components/ui/textarea";
+import { Switch } from "@/components/ui/switch";
 
 const formSchema = z.object({
 	picture: z.string().min(2).max(50),
@@ -31,14 +26,12 @@ const formSchema = z.object({
 	desc: z.string().min(2).max(50),
 	date: z.string().min(2).max(50),
 	minHolding: z.string().min(2).max(50),
-	duration: z.string().min(2).max(50),
 	minBid: z.string().min(2).max(50),
-	minPlayers: z.string().min(2).max(50),
 	maxplayers: z.string().min(2).max(50),
 	contribute: z.string().min(2).max(50),
 });
 
-export default function EngageForm() {
+export default function DegenForm() {
 	const [char1, setChar1] = useState<string>();
 	const [char2, setChar2] = useState<string>();
 	const [char3, setChar3] = useState<string>();
@@ -64,9 +57,7 @@ export default function EngageForm() {
 			desc: "",
 			date: "",
 			minHolding: "",
-			duration: "",
 			minBid: "",
-			minPlayers: "",
 			maxplayers: "",
 			contribute: "",
 		},
@@ -75,17 +66,6 @@ export default function EngageForm() {
 	function onSubmit(values: z.infer<typeof formSchema>) {
 		console.log(values);
 	}
-	const [files, setFiles] = useState<File[] | null>([]);
-
-	const dropzone = {
-		accept: {
-			"image/*": [".jpg", ".jpeg", ".png"],
-		},
-		multiple: true,
-		maxFiles: 4,
-		maxSize: 1 * 1024 * 1024,
-		// @ts-ignore
-	} satisfies DropzoneOptions;
 
 	const components: {
 		name: string;
@@ -126,81 +106,39 @@ export default function EngageForm() {
 			>
 				<div className="w-full flex flex-col gap-y-8">
 					<div className="flex flex-col gap-y-6">
-						<h5 className="text-4xl font-black text-purple-800">
-							Create character:
-						</h5>
-						<div className="flex gap-x-6">
-							<FormField
-								control={form.control}
-								name="picture"
-								render={({ field }) => (
-									<FormItem>
-										<FormControl>
-											<FileUploader
-												value={files}
-												onValueChange={setFiles}
-												dropzoneOptions={dropzone}
-											>
-												<FileInput {...field}>
-													<div className="flex flex-col gap-y-2 items-center justify-center size-40 text-center border-[3px] border-cream-800 border-dashed bg-cream rounded-md">
-														<Image
-															src="/face.svg"
-															alt="alt"
-															width={500}
-															height={500}
-															className="w-10"
-														/>
-														<p className="text-purple-grey">
-															Add memecoin picture
-														</p>
-													</div>
-												</FileInput>
-												<FileUploaderContent className="flex items-center flex-row gap-2">
-													{files?.map((file, i) => (
-														<FileUploaderItem
-															key={i}
-															index={i}
-															className="size-20 p-0 rounded-md overflow-hidden"
-															aria-roledescription={`file ${
-																i + 1
-															} containing ${
-																file.name
-															}`}
-														>
-															<Image
-																src={URL.createObjectURL(
-																	file
-																)}
-																alt={file.name}
-																height={80}
-																width={80}
-																className="size-20 p-0"
-															/>
-														</FileUploaderItem>
-													))}
-												</FileUploaderContent>
-											</FileUploader>
-										</FormControl>
-
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
+						<div className="w-full flex justify-between items-center">
+							<h5 className="text-4xl font-black text-purple-800">
+								Game description:{" "}
+							</h5>
+							<Switch className="data-[state=unchecked]:bg-purple-grey data-[state=checked]:bg-purple" />
+						</div>
+						<div className="flex flex-col gap-y-4 pb-4">
+							<h6 className="font-medium">Creators Joined</h6>
 							<div className="flex flex-wrap gap-x-4">
 								{[
-									{ title: "Pixel", icon: "👾" },
-									{ title: "3D Model", icon: "🧸" },
-									{ title: "Anime", icon: "🐲" },
-									{ title: "Sketch", icon: "✏️" },
-									{ title: "Random", icon: "🔮" },
-								].map((item) => (
-									<div className="w-fit h-fit px-6 border-2 border-purple-600 bg-purple-400 text-purple-600 p-2 rounded-md shadow-black shadow-md">
-										{item.icon}
-										{item.title}
+									{ img: "/c1.png", name: "MRETT" },
+									{ img: "/c2.png", name: "CHOMP" },
+									{ img: "/c3.png", name: "BRETT" },
+									{ img: "/c4.png", name: "PONKE" },
+									{ img: "/c5.png", name: "BOYSCLUB" },
+								].map((data, i) => (
+									<div
+										key={i}
+										className="flex items-center gap-x-2 bg-cream px-2 p-1 rounded-md"
+									>
+										<Image
+											src={data.img}
+											width={500}
+											height={500}
+											alt="alt"
+											className="w-6"
+										/>
+										<span>${data.name}</span>
 									</div>
 								))}
 							</div>
 						</div>
+
 						<div className="flex flex-col gap-y-8">
 							<h5 className="text-4xl font-black text-purple-800">
 								Game description:{" "}
@@ -278,22 +216,14 @@ export default function EngageForm() {
 									"Type amount (value in $COINTICKER)",
 								name: "minHolding",
 							},
-							{
-								label: "Epoch duration",
-								placeholder: "Minimum 3 days",
-								name: "duration",
-							},
+
 							{
 								label: "Minimum bid",
 								placeholder:
 									"Type amount (value in $COINTICKER)",
 								name: "minBid",
 							},
-							{
-								label: "Minimun allowed players",
-								placeholder: "Type amount",
-								name: "minPlayers",
-							},
+
 							{
 								label: "Maximum allowed players",
 								placeholder: "Type amount",
@@ -327,112 +257,7 @@ export default function EngageForm() {
 						))}
 					</div>
 				</div>
-				<div className="w-full flex flex-col gap-y-8">
-					<div className="flex flex-col gap-y-6 border-4 border-black p-6 rounded-xl">
-						<h5 className="text-4xl font-semibold text-cream bg-purple p-4 rounded-xl">
-							Choose Character
-						</h5>
-						<div className="bg-cream-800">
-							<div className="grid grid-cols-2 gap-4 p-8 justify-items-center rounded-xl  w-fit mx-auto">
-								{components.map((component, index) => (
-									<div
-										className=" border-2 border-purple-grey-800 rounded-xl flex flex-col justify-center items-center size-28 relative"
-										key={component.name}
-									>
-										<input
-											type="file"
-											ref={component.ref}
-											onChange={() => {
-												const file =
-													component.ref.current
-														?.files![0];
-												if (!file) {
-													component.setValue("");
-													return;
-												}
-												const fileTypes = [
-													"image/jpeg",
-													"image/jpg",
-													"image/png",
-												];
-												const { size, type } = file;
-												if (!fileTypes.includes(type)) {
-													console.log(
-														"File format must be either png or jpg"
-													);
-
-													return false;
-												}
-
-												if (size / 1024 / 1024 > 2) {
-													console.log(
-														"File size exceeded the limit of 2MB"
-													);
-													return false;
-												}
-
-												setComponentValues({
-													...componentValues,
-													[component.name]: file,
-												});
-												const reader = new FileReader();
-												if (file) {
-													reader.readAsDataURL(file);
-												}
-												reader.onload = (
-													readerEvent
-												) => {
-													component.setValue(
-														readerEvent!.target!.result!.toString()
-													);
-												};
-											}}
-											hidden
-											name={component.name}
-											id={component.name}
-											className="w-full bg-black"
-										/>
-										{!component.value && (
-											<button
-												onClick={() =>
-													component.ref.current?.click()
-												}
-												className="flex flex-col justify-center items-center space-y-2"
-											>
-												<Image
-													src="/component.svg"
-													alt="hero"
-													width={40}
-													height={40}
-													className="size-8"
-												/>
-											</button>
-										)}
-										{component.value && (
-											<>
-												<Image
-													src={component.value}
-													alt="mian-picture"
-													width={200}
-													height={200}
-													className="my-auto aspect-auto h-[98%] rounded-xl"
-												/>
-												<button
-													type="submit"
-													onClick={() =>
-														component.setValue("")
-													}
-													className="absolute right-1 top-1 p-1 rounded-lg bg-red-500 px-2 text-xs text-white"
-												>
-													X
-												</button>
-											</>
-										)}
-									</div>
-								))}
-							</div>
-						</div>
-					</div>
+				<div className="w-full flex flex-col justify-between gap-y-8">
 					<div>
 						<h6 className="text-4xl font-black">Links:</h6>
 						<div className="flex flex-col gap-y-4">
@@ -474,7 +299,7 @@ export default function EngageForm() {
 					</div>
 					<Button
 						type="submit"
-						className="w-fit rounded-lg text-lg font-medium h-12 hover:bg-pink bg-pink border-2 shadow-sm shadow-pink-800 border-pink-800 text-pink-800"
+						className="w-fit rounded-lg text-lg font-medium self-end h-12 hover:bg-pink bg-pink border-2 shadow-sm shadow-pink-800 border-pink-800 text-pink-800"
 					>
 						Approve and Launch
 					</Button>
