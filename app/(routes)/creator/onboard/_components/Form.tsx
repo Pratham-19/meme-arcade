@@ -31,15 +31,10 @@ const formSchema = z.object({
 	desc: z.string().min(2).max(50),
 	date: z.string().min(2).max(50),
 	amount: z.number().min(2).max(50),
-	minHolding: z.string().min(2).max(50),
-	duration: z.string().min(2).max(50),
-	minBid: z.string().min(2).max(50),
-	minPlayers: z.string().min(2).max(50),
 	maxplayers: z.string().min(2).max(50),
-	contribute: z.string().min(2).max(50),
 });
 
-export default function EngageForm() {
+export default function OnboardForm() {
 	const [char1, setChar1] = useState<string>();
 	const [char2, setChar2] = useState<string>();
 	const [char3, setChar3] = useState<string>();
@@ -64,12 +59,8 @@ export default function EngageForm() {
 			title: "",
 			desc: "",
 			date: "",
-			minHolding: "",
-			duration: "",
-			minBid: "",
-			minPlayers: "",
+			amount: 0,
 			maxplayers: "",
-			contribute: "",
 		},
 	});
 
@@ -85,7 +76,6 @@ export default function EngageForm() {
 		multiple: true,
 		maxFiles: 4,
 		maxSize: 1 * 1024 * 1024,
-		// @ts-ignore
 	} satisfies DropzoneOptions;
 
 	const components: {
@@ -272,61 +262,49 @@ export default function EngageForm() {
 						<h5 className="text-4xl font-black text-purple-800">
 							Rewards Dynamics:
 						</h5>
-						{[
-							{
-								label: "Minimum holding on wallet:",
-								placeholder:
-									"Type amount (value in $COINTICKER)",
-								name: "minHolding",
-							},
-							{
-								label: "Epoch duration",
-								placeholder: "Minimum 3 days",
-								name: "duration",
-							},
-							{
-								label: "Minimum bid",
-								placeholder:
-									"Type amount (value in $COINTICKER)",
-								name: "minBid",
-							},
-							{
-								label: "Minimun allowed players",
-								placeholder: "Type amount",
-								name: "minPlayers",
-							},
-							{
-								label: "Maximum allowed players",
-								placeholder: "Type amount",
-								name: "maxPlayers",
-							},
-							{
-								label: "Contribute to epoch rewards",
-								placeholder: "Type amount",
-								name: "contribute",
-							},
-						].map((item, index) => (
-							<FormField
-								key={index}
-								control={form.control}
-								// @ts-ignore
-								name={item.name}
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>{item.label}</FormLabel>
-										<FormControl>
-											<Input
-												className="bg-pearl border border-purple-grey-800 ring-none focus-visible:ring-none"
-												placeholder={item.placeholder}
-												{...field}
-											/>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-						))}
+						<FormField
+							control={form.control}
+							name="amount"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Choose total*</FormLabel>
+									<FormControl>
+										<Input
+											className="bg-pearl border border-purple-grey-800 ring-none focus-visible:ring-none"
+											placeholder="Type amount (value in $COINTICKER)"
+											{...field}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name="maxplayers"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>
+										Maximum Allowed Players:*
+									</FormLabel>
+									<FormControl>
+										<Input
+											className="bg-pearl border border-purple-grey-800 ring-none focus-visible:ring-none"
+											placeholder="Type amount (value in $COINTICKER)"
+											{...field}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
 					</div>
+					<Button
+						type="submit"
+						className="w-fit rounded-lg text-lg font-medium h-12 bg-pink border-2 shadow-sm shadow-pink-800 border-pink-800 text-pink-800"
+					>
+						Approve and Launch
+					</Button>
 				</div>
 				<div className="w-full flex flex-col gap-y-8">
 					<div className="flex flex-col gap-y-6 border-4 border-black p-6 rounded-xl">
@@ -473,12 +451,6 @@ export default function EngageForm() {
 							))}
 						</div>
 					</div>
-					<Button
-						type="submit"
-						className="w-fit rounded-lg text-lg font-medium h-12 hover:bg-pink bg-pink border-2 shadow-sm shadow-pink-800 border-pink-800 text-pink-800"
-					>
-						Approve and Launch
-					</Button>
 				</div>
 			</form>
 		</Form>
