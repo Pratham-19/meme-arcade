@@ -34,7 +34,7 @@ export default function Navbar() {
 								path.includes(href)
 									? "bg-pink border-none"
 									: "bg-none"
-							}  text-pearl px-8 py-2 rounded-lg border border-pearl/30 ${
+							}  text-pearl px-8 py-2 rounded-lg border border-pearl/30 hidden md:block ${
 								coustard.className
 							}`}
 							href={href}
@@ -43,7 +43,7 @@ export default function Navbar() {
 						</Link>
 					))}
 				</div>
-				<Button className="bg-transparent border border-pearl/50 text-sm">
+				<Button className="bg-transparent border border-pearl/50 text-sm hidden md:block">
 					Connect to Arcade
 				</Button>
 			</div>

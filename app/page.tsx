@@ -8,28 +8,28 @@ import {
 import { coustard, unbounded } from "@/components/Fonts";
 export default function Home() {
 	return (
-		<div className="max-w-screen-2xl w-11/12 mx-auto flex flex-col gap-y-10 py-8">
-			<div className="relative p-6  flex justify-between bg-purple text-cream border-black border-8 rounded-mg w-full">
+		<div className="max-w-screen-2xl w-11/12 mx-auto flex flex-col md:gap-y-10 py-8">
+			<div className="relative p-6  flex flex-col md:flex-row justify-between bg-purple text-cream border-black border-8 rounded-mg w-full">
 				<Image
 					src="/meme-arcade-hero.svg"
 					alt="alt"
 					width={500}
 					height={500}
-					className="absolute bottom-0 left-4 w-[15%]"
+					className="absolute top-5 md:bottom-0 left-4 w-[60%] md:w-[15%]"
 				/>
 				<div className="flex flex-col h-full justify-between gap-y-4 z-10">
 					<h6
-						className={`${unbounded.className} text-6xl w-1/2 font-bold`}
+						className={`${unbounded.className} text-3xl md:text-6xl md:w-1/2 font-bold`}
 					>
 						One Arcade to meme all!
 					</h6>
-					<p className={`${coustard.className} text-lg w-2/3`}>
+					<p className={`${coustard.className} text-lg md:w-2/3`}>
 						Players all over the world, games from all over the
 						metaverse.
 					</p>
 				</div>
 				<div
-					className={`${unbounded.className} flex items-center gap-x-4 border-[6px] rounded-md text-purple-800 border-purple-600 bg-custom-gradient px-6 pr-10 py-4 text-3xl font-black w-[18rem]`}
+					className={`${unbounded.className} flex items-center gap-x-4 border-[6px] rounded-md text-purple-800 border-purple-600 bg-custom-gradient px-4 md:px-6 md:pr-10 py-4 text-3xl font-black md:w-[18rem]`}
 				>
 					More than 900 games to choose
 				</div>
@@ -38,10 +38,10 @@ export default function Home() {
 					alt="alt"
 					width={500}
 					height={500}
-					className="absolute bottom-0 right-0 w-28"
+					className="absolute bottom-0 right-0 w-24 md:w-28"
 				/>
 			</div>
-			<div className="flex items-center justify-evenly py-2">
+			<div className="hidden md:flex flex-col md:flex-row items-center justify-evenly py-2">
 				<Image
 					src="/roadfighter-home.png"
 					alt="alt"
@@ -109,8 +109,8 @@ export default function Home() {
 					height={1000}
 				/>
 			</div>
-			<div className="grid grid-cols-2 py-16 justify-items-center">
-				<div className=" flex flex-col gap-y-6 bg-pearl border-4 border-purple-grey-800 w-[80%] p-6 rounded-lg">
+			<div className="grid grid-cols-1 md:grid-cols-2 py-16 gap-y-6 md:gap-y-0 justify-items-center">
+				<div className=" flex flex-col gap-y-6 bg-pearl border-4 border-purple-grey-800 md:w-[80%] p-6 rounded-lg">
 					<div className="bg-purple text-cream p-4 rounded-md flex items-center justify-between">
 						<p
 							className={`${unbounded.className} text-3xl font-bold`}
@@ -125,15 +125,15 @@ export default function Home() {
 							className="w-8"
 						/>
 					</div>
-					<div className="flex gap-x-6 text-purple-800">
+					<div className="flex flex-col md:flex-row gap-x-6 text-purple-800">
 						<Image
 							src="/pepe-player.png"
 							alt="alt"
 							width={500}
 							height={500}
-							className="w-1/2 border-4 border-purple-grey-800 rounded-lg"
+							className="md:w-1/2 border-4 border-purple-grey-800 rounded-lg"
 						/>
-						<div className="flex flex-col gap-y-6">
+						<div className="flex flex-col gap-y-4 md:gap-y-6 pt-4 md:py-0">
 							<p
 								className={`${coustard.className} text-2xl font-medium`}
 							>
@@ -148,7 +148,7 @@ export default function Home() {
 						</div>
 					</div>
 				</div>
-				<div className=" flex flex-col gap-y-6 bg-pearl border-4 border-purple-grey-800 w-[80%] p-6 rounded-lg">
+				<div className=" flex flex-col gap-y-6 bg-pearl border-4 border-purple-grey-800 md:w-[80%] p-6 rounded-lg">
 					<div className="bg-purple text-cream p-4 rounded-md flex items-center justify-between">
 						<p
 							className={`${unbounded.className} text-3xl font-bold`}
@@ -163,15 +163,15 @@ export default function Home() {
 							className="w-8"
 						/>
 					</div>
-					<div className="flex gap-x-6 text-purple-800">
+					<div className="flex flex-col md:flex-row gap-x-6 text-purple-800">
 						<Image
 							src="/pepe-creator.png"
 							alt="alt"
 							width={500}
 							height={500}
-							className="w-1/2 border-4 border-purple-grey-800 rounded-lg"
+							className="md:w-1/2 border-4 border-purple-grey-800 rounded-lg"
 						/>
-						<div className="flex flex-col gap-y-6">
+						<div className="flex flex-col gap-y-4 md:gap-y-6 pt-4 md:py-0">
 							<p
 								className={`${coustard.className} text-2xl font-medium`}
 							>
