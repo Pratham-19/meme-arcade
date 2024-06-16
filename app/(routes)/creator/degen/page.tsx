@@ -1,10 +1,11 @@
 import Image from "next/image";
 import React from "react";
 import DegenForm from "./_components/Form";
+import { coustard, unbounded } from "@/components/Fonts";
 
 export default function page() {
 	return (
-		<div className="flex flex-col gap-y-8">
+		<div className={`${unbounded.className} flex flex-col gap-y-8`}>
 			<div className="w-full h-fit gap-x-10 bg-purple border-4 border-black rounded-xl p-8 flex">
 				<Image
 					src="/poker.png"
@@ -25,12 +26,14 @@ export default function page() {
 						Degen Games
 					</div>
 					<h6 className="text-5xl font-bold ">Poker made my day</h6>
-					<p className="text-lg">
+					<p className={`${coustard.className} text-lg`}>
 						Your Degen users will compete for a Juicy prize daily,
 						join other protocols and grow your community. Just one
 						player takes it all.
 					</p>
-					<div className="flex gap-x-4">
+					<div
+						className={`${coustard.className} mt-auto flex gap-x-4`}
+					>
 						<div className="bg-purple-600 px-4 py-2 w-fit">
 							🕹️ 70% earnings for Player
 						</div>

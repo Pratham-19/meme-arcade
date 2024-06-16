@@ -24,6 +24,7 @@ import { Input } from "@/components/ui/input";
 import { useRef, useState } from "react";
 import Image from "next/image";
 import { Textarea } from "@/components/ui/textarea";
+import { unbounded } from "@/components/Fonts";
 
 const formSchema = z.object({
 	picture: z.string().min(2).max(50),
@@ -76,7 +77,7 @@ export default function OnboardForm() {
 		multiple: true,
 		maxFiles: 4,
 		maxSize: 1 * 1024 * 1024,
-	} satisfies DropzoneOptions;
+	};
 
 	const components: {
 		name: string;
@@ -115,9 +116,11 @@ export default function OnboardForm() {
 				onSubmit={form.handleSubmit(onSubmit)}
 				className="grid grid-cols-2 gap-x-10 text-purple-800"
 			>
-				<div className="w-full flex flex-col gap-y-8">
+				<div
+					className={`${unbounded.className} w-full flex flex-col gap-y-8`}
+				>
 					<div className="flex flex-col gap-y-6">
-						<h5 className="text-4xl font-black text-purple-800">
+						<h5 className={` text-4xl font-black text-purple-800`}>
 							Create character:
 						</h5>
 						<div className="flex gap-x-6">
@@ -185,7 +188,7 @@ export default function OnboardForm() {
 									{ title: "Sketch", icon: "✏️" },
 									{ title: "Random", icon: "🔮" },
 								].map((item) => (
-									<div className="w-fit h-fit px-6 border-2 border-purple-600 bg-purple-400 text-purple-600 p-2 rounded-md shadow-black shadow-md">
+									<div className="w-fit font-bold h-fit px-6 border-2 border-purple-600 bg-purple-400 text-purple-600 p-2 rounded-md shadow-black shadow-md">
 										{item.icon}
 										{item.title}
 									</div>
@@ -301,14 +304,16 @@ export default function OnboardForm() {
 					</div>
 					<Button
 						type="submit"
-						className="w-fit rounded-lg text-lg font-medium h-12 hover:bg-pink bg-pink border-2 shadow-sm shadow-pink-800 border-pink-800 text-pink-800"
+						className="w-fit rounded-lg text-lg mt-auto font-medium h-12 hover:bg-pink bg-pink border-2 shadow-sm shadow-pink-800 border-pink-800 text-pink-800"
 					>
 						Approve and Launch
 					</Button>
 				</div>
 				<div className="w-full flex flex-col gap-y-8">
 					<div className="flex flex-col gap-y-6 border-4 border-black p-6 rounded-xl">
-						<h5 className="text-4xl font-semibold text-cream bg-purple p-4 rounded-xl">
+						<h5
+							className={`${unbounded.className} text-4xl font-semibold text-cream bg-purple p-4 rounded-xl`}
+						>
 							Choose Character
 						</h5>
 						<div className="bg-cream-800">
@@ -412,9 +417,9 @@ export default function OnboardForm() {
 							</div>
 						</div>
 					</div>
-					<div>
+					<div className={`${unbounded.className}`}>
 						<h6 className="text-4xl font-black">Links:</h6>
-						<div className="flex flex-col gap-y-4">
+						<div className="flex flex-col gap-y-4 pt-4">
 							{[
 								{
 									title: "website",

@@ -11,13 +11,16 @@ import Image from "next/image";
 import Autoplay from "embla-carousel-autoplay";
 import { Button } from "@/components/ui/button";
 import Card from "@/components/Card";
+import { coustard, unbounded } from "@/components/Fonts";
 
 export default function page() {
 	return (
 		<div className="flex flex-col gap-y-12 text-cream">
 			<div className="flex items-center h-fit">
-				<div className="flex flex-col h-fit gap-y-2 pb-4 px-3 bg-pearl border-black border-4 rounded-md">
-					<p className="text-lg font-bold py-2 text-purple-800 text-center">
+				<div className="flex flex-col h-fit gap-y-2 pb-4 pt-2 px-3 bg-pearl border-black border-4 rounded-md">
+					<p
+						className={`${coustard.className} text-lg font-bold text-purple-800 text-center`}
+					>
 						Featured Games
 					</p>
 					<Carousel
@@ -67,7 +70,9 @@ export default function page() {
 					/>
 				</div>
 				<div className="relative flex flex-col gap-y-4 p-6 bg-purple border-black border-y-8 border-r-8 rounded-y-md rounded-r-md w-full">
-					<div className="flex items-center gap-x-4 border-4 rounded-md text-purple-800 border-purple-800 bg-custom-gradient px-6 py-2 text-lg font-bold w-fit">
+					<div
+						className={`${unbounded.className} flex items-center gap-x-4 border-4 rounded-md text-purple-800 border-purple-800 bg-custom-gradient px-6 py-2 text-lg font-bold w-fit`}
+					>
 						{/* <Image
 							src="/arcade-purple.svg"
 							alt="alt"
@@ -77,10 +82,12 @@ export default function page() {
 						/> */}
 						More than 900 games to choose
 					</div>
-					<h6 className="text-5xl font-bold ">
+					<h6
+						className={`${unbounded.className} text-5xl font-bold `}
+					>
 						Is all about the story ✨
 					</h6>
-					<p className="text-lg">
+					<p className={`${coustard.className}  text-lg`}>
 						Your meme comunity more engaged than ever
 					</p>
 					<Image
@@ -105,13 +112,19 @@ export default function page() {
 							/>
 						</div>
 						<div className="flex flex-col">
-							<h6 className="text-2xl font-bold">
+							<h6
+								className={`${unbounded.className} text-2xl font-bold`}
+							>
 								Onboarding Games
 							</h6>
-							<p>Welcome new users to your community</p>
+							<p className={`${coustard.className}`}>
+								Welcome new users to your community
+							</p>
 						</div>
 					</div>
-					<Button className="w-fit bg-pink hover:bg-pink border-[3px] h-12 px-6 rounded-none text-lg font-bold border-cream ">
+					<Button
+						className={`${unbounded.className} w-fit bg-pink hover:bg-pink border-[3px] h-12 px-6 rounded-none text-lg font-bold border-cream`}
+					>
 						More Games
 					</Button>
 				</div>
@@ -161,16 +174,20 @@ export default function page() {
 							/>
 						</div>
 						<div className="flex flex-col">
-							<h6 className="text-2xl font-bold">
+							<h6
+								className={`${unbounded.className} text-2xl font-bold`}
+							>
 								Enganging Games
 							</h6>
-							<p>
+							<p className={`${coustard.className}`}>
 								Keep your community engaged competing for weekly
 								prizes.
 							</p>
 						</div>
 					</div>
-					<Button className="w-fit bg-pink hover:bg-pink border-[3px] h-12 px-6 rounded-none text-lg font-bold border-cream ">
+					<Button
+						className={`${unbounded.className}w-fit bg-pink hover:bg-pink border-[3px] h-12 px-6 rounded-none text-lg font-bold border-cream `}
+					>
 						More Games
 					</Button>
 				</div>
@@ -220,14 +237,20 @@ export default function page() {
 							/>
 						</div>
 						<div className="flex flex-col">
-							<h6 className="text-2xl font-bold">Degen Games</h6>
-							<p>
+							<h6
+								className={`${unbounded.className}text-2xl font-bold`}
+							>
+								Degen Games
+							</h6>
+							<p className={`${coustard.className}`}>
 								Make alliances with other memecoins, and let
 								users get juicy prizes.
 							</p>
 						</div>
 					</div>
-					<Button className="w-fit bg-pink hover:bg-pink border-[3px] h-12 px-6 rounded-none text-lg font-bold border-cream ">
+					<Button
+						className={`${unbounded.className} w-fit bg-pink hover:bg-pink border-[3px] h-12 px-6 rounded-none text-lg font-bold border-cream `}
+					>
 						More Games
 					</Button>
 				</div>

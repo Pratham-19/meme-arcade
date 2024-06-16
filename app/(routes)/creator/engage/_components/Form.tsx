@@ -194,7 +194,7 @@ export default function EngageForm() {
 									{ title: "Sketch", icon: "✏️" },
 									{ title: "Random", icon: "🔮" },
 								].map((item) => (
-									<div className="w-fit h-fit px-6 border-2 border-purple-600 bg-purple-400 text-purple-600 p-2 rounded-md shadow-black shadow-md">
+									<div className="w-fit h-fit font-bold px-6 border-2 border-purple-600 bg-purple-400 text-purple-600 p-2 rounded-md shadow-black shadow-md">
 										{item.icon}
 										{item.title}
 									</div>
@@ -435,7 +435,7 @@ export default function EngageForm() {
 					</div>
 					<div>
 						<h6 className="text-4xl font-black">Links:</h6>
-						<div className="flex flex-col gap-y-4">
+						<div className="flex flex-col gap-y-4 pt-4">
 							{[
 								{
 									title: "website",
@@ -474,7 +474,7 @@ export default function EngageForm() {
 					</div>
 					<Button
 						type="submit"
-						className="w-fit rounded-lg text-lg font-medium h-12 hover:bg-pink bg-pink border-2 shadow-sm shadow-pink-800 border-pink-800 text-pink-800"
+						className="w-fit rounded-lg ml-auto mt-auto text-lg font-medium h-12 hover:bg-pink bg-pink border-2 shadow-sm shadow-pink-800 border-pink-800 text-pink-800"
 					>
 						Approve and Launch
 					</Button>

@@ -18,7 +18,9 @@ export default function Home() {
 					className="absolute bottom-0 left-4 w-[15%]"
 				/>
 				<div className="flex flex-col h-full justify-between gap-y-4 z-10">
-					<h6 className={`${unbounded.className} text-6xl w-1/2 font-bold`}>
+					<h6
+						className={`${unbounded.className} text-6xl w-1/2 font-bold`}
+					>
 						One Arcade to meme all!
 					</h6>
 					<p className={`${coustard.className} text-lg w-2/3`}>
@@ -49,7 +51,7 @@ export default function Home() {
 				/>
 				<div className="absolute flex flex-col w-[30rem] gap-y-2 pb-4 px-3 bg-pearl border-black border-4 rounded-md">
 					<p
-						className={`${coustard.className} text-lg font-bold pt-1.5 text-purple-800 text-center`}
+						className={`${coustard.className} font-black text-lg pt-1.5 text-purple-800 text-center`}
 					>
 						Featured Games
 					</p>
@@ -111,7 +113,7 @@ export default function Home() {
 				<div className=" flex flex-col gap-y-6 bg-pearl border-4 border-purple-grey-800 w-[80%] p-6 rounded-lg">
 					<div className="bg-purple text-cream p-4 rounded-md flex items-center justify-between">
 						<p
-							className={`${unbounded.className} text-xl font-bold`}
+							className={`${unbounded.className} text-3xl font-bold`}
 						>
 							Player
 						</p>
@@ -120,7 +122,7 @@ export default function Home() {
 							alt="alt"
 							width={500}
 							height={500}
-							className="w-5"
+							className="w-8"
 						/>
 					</div>
 					<div className="flex gap-x-6 text-purple-800">
@@ -149,7 +151,7 @@ export default function Home() {
 				<div className=" flex flex-col gap-y-6 bg-pearl border-4 border-purple-grey-800 w-[80%] p-6 rounded-lg">
 					<div className="bg-purple text-cream p-4 rounded-md flex items-center justify-between">
 						<p
-							className={`${unbounded.className} text-xl font-bold`}
+							className={`${unbounded.className} text-3xl font-bold`}
 						>
 							Creator
 						</p>
@@ -158,7 +160,7 @@ export default function Home() {
 							alt="alt"
 							width={500}
 							height={500}
-							className="w-5"
+							className="w-8"
 						/>
 					</div>
 					<div className="flex gap-x-6 text-purple-800">

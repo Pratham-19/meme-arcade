@@ -2,12 +2,9 @@
 import Image from "next/image";
 import React from "react";
 import Link from "next/link";
-import { Coustard } from "next/font/google";
 import { usePathname } from "next/navigation";
 import { Button } from "./ui/button";
-import path from "path";
-
-const coustard = Coustard({ weight: "400", subsets: ["latin"] });
+import { coustard, unbounded } from "@/components/Fonts";
 
 export default function Navbar() {
 	const path = usePathname();
@@ -16,7 +13,7 @@ export default function Navbar() {
 	return (
 		<div className={` bg-black w-full`}>
 			<div className="max-w-screen-2xl w-11/12 mx-auto py-4 flex items-center justify-between">
-				<div className="flex items-center gap-x-4 text-sm">
+				<div className="flex items-center gap-x-8 text-sm">
 					<Link href="/">
 						<Image
 							src={"/logo.svg"}
@@ -37,7 +34,7 @@ export default function Navbar() {
 								path.includes(href)
 									? "bg-pink border-none"
 									: "bg-none"
-							} mx-4 text-pearl px-8 py-2 rounded-lg border border-pearl/30 ${
+							}  text-pearl px-8 py-2 rounded-lg border border-pearl/30 ${
 								coustard.className
 							}`}
 							href={href}

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import OnboardForm from "./_components/Form";
+import { coustard, unbounded } from "@/components/Fonts";
 
 export default function page() {
 	return (
@@ -14,7 +15,9 @@ export default function page() {
 					className="h-fit w-[30%]"
 				/>
 				<div className="flex flex-col gap-y-4 text-cream w-2/3">
-					<div className="flex items-center gap-x-4 border-2 rounded-md text-purple-800 border-purple-800 bg-custom-gradient px-6 py-2 text-lg font-bold w-fit">
+					<div
+						className={`${unbounded.className} flex items-center gap-x-4 border-2 rounded-md text-purple-800 border-purple-800 bg-custom-gradient px-6 py-2 text-lg font-bold w-fit`}
+					>
 						<Image
 							src="/arcade-purple.svg"
 							alt="alt"
@@ -24,12 +27,18 @@ export default function page() {
 						/>
 						Onboarding Games
 					</div>
-					<h6 className="text-5xl font-bold ">That Flying burd</h6>
-					<p className="text-lg">
+					<h6
+						className={`${unbounded.className} text-5xl font-bold `}
+					>
+						That Flying burd
+					</h6>
+					<p className={`${coustard.className} text-lg`}>
 						Onboard new users with this game. Just create the game
 						character, and choose total rewards to distribute.
 					</p>
-					<div className="bg-purple-600 px-4 py-2 w-fit">
+					<div
+						className={`${coustard.className} bg-purple-600 px-4 py-2 w-fit mt-auto`}
+					>
 						🕹️ 100% earnings for Player
 					</div>
 				</div>

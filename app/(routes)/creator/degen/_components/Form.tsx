@@ -260,7 +260,7 @@ export default function DegenForm() {
 				<div className="w-full flex flex-col justify-between gap-y-8">
 					<div>
 						<h6 className="text-4xl font-black">Links:</h6>
-						<div className="flex flex-col gap-y-4">
+						<div className="flex flex-col gap-y-4 pt-4">
 							{[
 								{
 									title: "website",

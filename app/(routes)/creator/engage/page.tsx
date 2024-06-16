@@ -1,10 +1,11 @@
 import Image from "next/image";
 import React from "react";
 import OnboardForm from "./_components/Form";
+import { coustard, unbounded } from "@/components/Fonts";
 
 export default function page() {
 	return (
-		<div className="flex flex-col gap-y-8">
+		<div className={`${unbounded.className} flex flex-col gap-y-8`}>
 			<div className="w-full h-fit gap-x-10 bg-purple border-4 border-black rounded-xl p-8 flex">
 				<Image
 					src="/carfighter.png"
@@ -25,12 +26,12 @@ export default function page() {
 						Enganging Games
 					</div>
 					<h6 className="text-5xl font-bold ">Racing Kars</h6>
-					<p className="text-lg">
+					<p className={`${coustard.className} text-lg`}>
 						Keep users engaged and the conversation going on. Users
 						will compete between them for accrued prizes by epoch.
 						Top 3 Users take the prize.
 					</p>
-					<div className="flex gap-x-4">
+					<div className={`${coustard.className} mt-auto flex gap-x-4`}>
 						<div className="bg-purple-600 px-4 py-2 w-fit">
 							🕹️ 50% earnings for Player
 						</div>
