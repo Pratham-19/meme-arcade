@@ -22,11 +22,11 @@ export default function RootLayout({
 				<Navbar />
 				{children}
 				<Image
-					src="/arcade-machine-bg.png"
+					src="/arcade-machine-bg.svg"
 					alt="alt"
 					width={1000}
 					height={1000}
-					className="fixed right-0 bottom-0 w-[30rem] -z-10"
+					className="fixed right-0 bottom-0 w-[30rem] -z-10 opacity-70"
 				/>
 			</body>
 		</html>
