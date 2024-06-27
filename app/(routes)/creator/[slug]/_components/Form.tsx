@@ -23,22 +23,18 @@ import {
 import { Input } from "@/components/ui/input";
 import { useRef, useState } from "react";
 import Image from "next/image";
-import { Textarea } from "@/components/ui/textarea";
+import { unbounded } from "@/components/Fonts";
 
 const formSchema = z.object({
 	picture: z.string().min(2).max(50),
 	title: z.string().min(2).max(50),
 	desc: z.string().min(2).max(50),
 	date: z.string().min(2).max(50),
-	minHolding: z.string().min(2).max(50),
-	duration: z.string().min(2).max(50),
-	minBid: z.string().min(2).max(50),
-	minPlayers: z.string().min(2).max(50),
+	amount: z.number().min(2).max(50),
 	maxplayers: z.string().min(2).max(50),
-	contribute: z.string().min(2).max(50),
 });
 
-export default function EngageForm() {
+export default function OnboardForm() {
 	const [char1, setChar1] = useState<string>();
 	const [char2, setChar2] = useState<string>();
 	const [char3, setChar3] = useState<string>();
@@ -48,6 +44,9 @@ export default function EngageForm() {
 	const char2Ref = useRef<HTMLInputElement>(null);
 	const char3Ref = useRef<HTMLInputElement>(null);
 	const char4Ref = useRef<HTMLInputElement>(null);
+
+	const [promt, setPrompt] = useState("");
+	const [data, setData] = useState();
 
 	const [componentValues, setComponentValues] = useState({
 		"1": null,
@@ -61,14 +60,9 @@ export default function EngageForm() {
 		defaultValues: {
 			picture: "",
 			title: "",
-			desc: "",
 			date: "",
-			minHolding: "",
-			duration: "",
-			minBid: "",
-			minPlayers: "",
+			amount: 0,
 			maxplayers: "",
-			contribute: "",
 		},
 	});
 
@@ -84,8 +78,7 @@ export default function EngageForm() {
 		multiple: true,
 		maxFiles: 4,
 		maxSize: 1 * 1024 * 1024,
-		// @ts-ignore
-	} satisfies DropzoneOptions;
+	};
 
 	const components: {
 		name: string;
@@ -118,15 +111,33 @@ export default function EngageForm() {
 			ref: char4Ref,
 		},
 	];
+	const fetchImage = async () => {
+		const response = await fetch("/api/route", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({ promt }),
+		});
+
+		const data = await response.json();
+		setData(data);
+	};
+
+	console.log(data);
+
 	return (
 		<Form {...form}>
 			<form
 				onSubmit={form.handleSubmit(onSubmit)}
 				className="grid grid-cols-2 gap-x-10 text-purple-800"
 			>
-				<div className="w-full flex flex-col gap-y-8">
+				<div
+					className={`${unbounded.className} w-full flex flex-col gap-y-8`}
+				>
 					<div className="flex flex-col gap-y-6">
-						<h5 className="text-4xl font-black text-purple-800">
+						<p>{data}</p>
+						<h5 className={` text-4xl font-black text-purple-800`}>
 							Create character:
 						</h5>
 						<div className="flex gap-x-6">
@@ -187,18 +198,27 @@ export default function EngageForm() {
 								)}
 							/>
 							<div className="flex flex-wrap gap-x-4">
-								{[
-									{ title: "Pixel", icon: "👾" },
-									{ title: "3D Model", icon: "🧸" },
-									{ title: "Anime", icon: "🐲" },
-									{ title: "Sketch", icon: "✏️" },
-									{ title: "Random", icon: "🔮" },
-								].map((item) => (
-									<div className="w-fit h-fit font-bold px-6 border-2 border-purple-600 bg-purple-400 text-purple-600 p-2 rounded-md shadow-black shadow-md">
-										{item.icon}
-										{item.title}
-									</div>
-								))}
+								<Input
+									className="bg-pearl border border-purple-grey-800 ring-none focus-visible:ring-none py-4"
+									placeholder="Type your prompt"
+									onChange={(e) => {
+										setPrompt(e.target.value);
+									}}
+								/>
+								<Button
+									type="button"
+									onClick={fetchImage}
+									className="flex items-center justify-center gap-x-2 w-fit font-bold h-fit text-lg px-6 border-2 border-purple-grey-600 bg-purple-grey text-purple-grey-600 p-2 rounded-md shadow-black shadow-md"
+								>
+									<Image
+										src="/drawing.svg"
+										alt="alt"
+										width={500}
+										height={500}
+										className="w-8"
+									/>
+									Generate
+								</Button>
 							</div>
 						</div>
 						<div className="flex flex-col gap-y-8">
@@ -222,26 +242,7 @@ export default function EngageForm() {
 									</FormItem>
 								)}
 							/>
-							<FormField
-								control={form.control}
-								name="desc"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>
-											Add a catchy description for your
-											users:*
-										</FormLabel>
-										<FormControl>
-											<Textarea
-												className="bg-pearl border border-purple-grey-800 ring-none focus-visible:ring-none"
-												placeholder="Type link"
-												{...field}
-											/>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
+
 							<FormField
 								control={form.control}
 								name="date"
@@ -271,65 +272,55 @@ export default function EngageForm() {
 						<h5 className="text-4xl font-black text-purple-800">
 							Rewards Dynamics:
 						</h5>
-						{[
-							{
-								label: "Minimum holding on wallet:",
-								placeholder:
-									"Type amount (value in $COINTICKER)",
-								name: "minHolding",
-							},
-							{
-								label: "Epoch duration",
-								placeholder: "Minimum 3 days",
-								name: "duration",
-							},
-							{
-								label: "Minimum bid",
-								placeholder:
-									"Type amount (value in $COINTICKER)",
-								name: "minBid",
-							},
-							{
-								label: "Minimun allowed players",
-								placeholder: "Type amount",
-								name: "minPlayers",
-							},
-							{
-								label: "Maximum allowed players",
-								placeholder: "Type amount",
-								name: "maxPlayers",
-							},
-							{
-								label: "Contribute to epoch rewards",
-								placeholder: "Type amount",
-								name: "contribute",
-							},
-						].map((item, index) => (
-							<FormField
-								key={index}
-								control={form.control}
-								// @ts-ignore
-								name={item.name}
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>{item.label}</FormLabel>
-										<FormControl>
-											<Input
-												className="bg-pearl border border-purple-grey-800 ring-none focus-visible:ring-none"
-												placeholder={item.placeholder}
-												{...field}
-											/>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-						))}
+						<FormField
+							control={form.control}
+							name="amount"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Choose total*</FormLabel>
+									<FormControl>
+										<Input
+											className="bg-pearl border border-purple-grey-800 ring-none focus-visible:ring-none"
+											placeholder="Type amount (value in $COINTICKER)"
+											{...field}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name="maxplayers"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>
+										Maximum Allowed Players:*
+									</FormLabel>
+									<FormControl>
+										<Input
+											className="bg-pearl border border-purple-grey-800 ring-none focus-visible:ring-none"
+											placeholder="Type amount (value in $COINTICKER)"
+											{...field}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
 					</div>
+					<Button
+						type="submit"
+						className="w-fit rounded-lg text-lg mt-auto font-medium h-12 hover:bg-pink bg-pink border-2 shadow-sm shadow-pink-800 border-pink-800 text-pink-800"
+					>
+						Approve and Launch
+					</Button>
 				</div>
 				<div className="w-full flex flex-col gap-y-8">
 					<div className="flex flex-col gap-y-6 border-4 border-black p-6 rounded-xl">
-						<h5 className="text-4xl font-semibold text-cream bg-purple p-4 rounded-xl">
+						<h5
+							className={`${unbounded.className} text-4xl font-semibold text-cream bg-purple p-4 rounded-xl`}
+						>
 							Choose Character
 						</h5>
 						<div className="bg-cream-800">
@@ -433,7 +424,7 @@ export default function EngageForm() {
 							</div>
 						</div>
 					</div>
-					<div>
+					<div className={`${unbounded.className}`}>
 						<h6 className="text-4xl font-black">Links:</h6>
 						<div className="flex flex-col gap-y-4 pt-4">
 							{[
@@ -449,10 +440,6 @@ export default function EngageForm() {
 								{
 									title: "Discord",
 									placeholder: "Type invite link",
-								},
-								{
-									title: "Dextools",
-									placeholder: "Type chart link",
 								},
 								{
 									title: "Coingecko",
@@ -472,12 +459,6 @@ export default function EngageForm() {
 							))}
 						</div>
 					</div>
-					<Button
-						type="submit"
-						className="w-fit rounded-lg ml-auto mt-auto text-lg font-medium h-12 hover:bg-pink bg-pink border-2 shadow-sm shadow-pink-800 border-pink-800 text-pink-800"
-					>
-						Approve and Launch
-					</Button>
 				</div>
 			</form>
 		</Form>

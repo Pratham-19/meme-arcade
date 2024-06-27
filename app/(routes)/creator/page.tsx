@@ -12,6 +12,7 @@ import Autoplay from "embla-carousel-autoplay";
 import { Button } from "@/components/ui/button";
 import Card from "@/components/Card";
 import { coustard, unbounded } from "@/components/Fonts";
+import Link from "next/link";
 
 export default function page() {
 	return (
@@ -128,27 +129,13 @@ export default function page() {
 						More Games
 					</Button>
 				</div>
-				<div className="p-6 bg-yellow-600-80a flex w-full overflow-x-auto gap-x-4 rounded-b-lg">
+				<div className="p-6 bg-yellow-600-80a flex flex-row w-full overflow-x-scroll gap-x-4 rounded-b-lg">
 					{[
 						{
 							title: "The Flying Burd",
 							image: "/flappyBird.png",
 							type: "onboard",
-						},
-						{
-							title: "The Flying Burd",
-							image: "/flappyBird.png",
-							type: "onboard",
-						},
-						{
-							title: "The Flying Burd",
-							image: "/flappyBird.png",
-							type: "onboard",
-						},
-						{
-							title: "The Flying Burd",
-							image: "/flappyBird.png",
-							type: "onboard",
+							link: "pacman",
 						},
 					].map((item, index) => (
 						<Card
@@ -156,6 +143,7 @@ export default function page() {
 							title={item.title}
 							image={item.image}
 							type={item.type}
+							link={item.link}
 						/>
 					))}
 				</div>
@@ -191,27 +179,13 @@ export default function page() {
 						More Games
 					</Button>
 				</div>
-				<div className="p-6 bg-yellow-600-80a w-full overflow-x-auto flex flex-wrap gap-x-4 rounded-b-lg">
+				<div className="p-6 bg-yellow-600-80a flex flex-row w-full overflow-x-scroll gap-x-4 rounded-b-lg">
 					{[
 						{
 							title: "Racing Kars",
 							image: "/carfighter.png",
 							type: "engage",
-						},
-						{
-							title: "Racing Kars",
-							image: "/carfighter.png",
-							type: "engage",
-						},
-						{
-							title: "Racing Kars",
-							image: "/carfighter.png",
-							type: "engage",
-						},
-						{
-							title: "Racing Kars",
-							image: "/carfighter.png",
-							type: "engage",
+							link: "carfighter",
 						},
 					].map((item, index) => (
 						<Card
@@ -219,6 +193,7 @@ export default function page() {
 							title={item.title}
 							image={item.image}
 							type={item.type}
+							link={item.link}
 						/>
 					))}
 				</div>
@@ -254,27 +229,13 @@ export default function page() {
 						More Games
 					</Button>
 				</div>
-				<div className="p-6 bg-yellow-600-80a w-full overflow-x-auto flex flex-wrap gap-x-4 rounded-b-lg">
+				<div className="p-6 bg-yellow-600-80a flex flex-row w-full overflow-x-scroll gap-x-4 rounded-b-lg">
 					{[
 						{
 							title: "Made my day",
 							image: "/poker.png",
 							type: "degen",
-						},
-						{
-							title: "Made my day",
-							image: "/poker.png",
-							type: "degen",
-						},
-						{
-							title: "Made my day",
-							image: "/poker.png",
-							type: "degen",
-						},
-						{
-							title: "Made my day",
-							image: "/poker.png",
-							type: "degen",
+							link: "poker",
 						},
 					].map((item, key) => (
 						<Card
@@ -282,6 +243,7 @@ export default function page() {
 							title={item.title}
 							image={item.image}
 							type={item.type}
+							link={item.link}
 						/>
 					))}
 				</div>

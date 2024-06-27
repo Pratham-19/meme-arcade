@@ -16,10 +16,12 @@ export default function Card({
 	title,
 	image,
 	type,
+	link,
 }: {
 	title: string;
 	image: string;
 	type: string;
+	link: string;
 }) {
 	return (
 		<div className="border-4 border-purple-grey-800 rounded-t-md rounded-b-lg w-72">
@@ -53,17 +55,19 @@ export default function Card({
 					>
 						+ 35% weekly players
 					</div>
-
-					<Dialog>
+					<Link href={`/creator/${link}`}>
+						<Image
+							src="/circle-plus.svg"
+							alt="alt"
+							width={500}
+							height={500}
+							className="size-6"
+						/>
+					</Link>
+					{/* <Dialog>
 						<DialogTrigger>
 							{" "}
-							<Image
-								src="/circle-plus.svg"
-								alt="alt"
-								width={500}
-								height={500}
-								className="size-6"
-							/>
+						
 						</DialogTrigger>
 						<DialogContent className="bg-pearl p-4 border-[5px] border-black w-11/12 max-w-5xl">
 							<h5
@@ -181,7 +185,7 @@ export default function Card({
 								</div>
 							</div>
 						</DialogContent>
-					</Dialog>
+					</Dialog> */}
 				</div>
 			</div>
 		</div>

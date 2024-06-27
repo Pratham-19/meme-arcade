@@ -4,6 +4,7 @@ import Image from "next/image";
 import React from "react";
 import { coustard, unbounded } from "@/components/Fonts";
 import { Roboto_Mono } from "next/font/google";
+import Link from "next/link";
 
 const roboto = Roboto_Mono({ subsets: ["latin"] });
 
@@ -22,30 +23,25 @@ export default function page() {
 						width={500}
 						height={500}
 					/>
-					<div className="flex flex-col ">
-						<p className={`${coustard.className}`}>
-							Managing: <span>12 Memecoins</span>
-						</p>
-						<p className="text-5xl font-black text-purple-grey-800 ">
-							Degen Boi
-						</p>
-					</div>
+					<p className="text-5xl font-black text-purple-grey-800 ">
+						Degen Boi
+					</p>
 				</div>
 				<div className="flex gap-x-2">
 					{[
 						{
 							title: "Total rewards",
-							value: 1000,
+							value: 0,
 							type: "USD",
 						},
 						{
 							title: "Total burnt",
-							value: 1000,
+							value: 0,
 							type: "$COIN",
 						},
 						{
 							title: "Total on LPs",
-							value: 1000,
+							value: 0,
 							type: "$COIN",
 						},
 					].map((item) => (
@@ -100,9 +96,9 @@ export default function page() {
 									The Flying Burd
 								</h6>
 							</div>
-							<Button
-								type="submit"
-								className="w-full rounded-lg flex gap-x-3 text-base font-bold px-8 hover:bg-pink bg-pink border-2 shadow-sm shadow-pink-800 border-pink-800 text-pink-800"
+							<Link
+								href="create"
+								className="w-full py-2 items-center justify-center rounded-lg flex gap-x-3 text-base font-bold px-8 hover:bg-pink bg-pink border-2 shadow-sm shadow-pink-800 border-pink-800 text-pink-800"
 							>
 								<Image
 									src="/world.svg"
@@ -112,7 +108,7 @@ export default function page() {
 									className="w-6"
 								/>
 								Create
-							</Button>
+							</Link>
 						</div>
 					</div>
 				</div>
@@ -128,16 +124,19 @@ export default function page() {
 							title: "The Flying Burd",
 							image: "/flappyBird.png",
 							type: "onboard",
+							link: "pacman",
 						},
 						{
 							title: "Racing Kars",
 							image: "/carfighter.png",
 							type: "degen",
+							link: "carfighter",
 						},
 						{
 							title: "Made my day",
 							image: "/poker.png",
 							type: "degen",
+							link: "dengen",
 						},
 					].map((item, key) => (
 						<Card
@@ -145,6 +144,7 @@ export default function page() {
 							title={item.title}
 							image={item.image}
 							type={item.type}
+							link={item.link}
 						/>
 					))}
 				</div>
