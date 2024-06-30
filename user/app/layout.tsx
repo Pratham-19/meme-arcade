@@ -17,7 +17,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`bg-yellow`}>
         <OnchainProviders>
-          <div className="max-w-screen-2xl h-screen mx-auto">{children}</div>
+          <div className="max-w-screen-2xl h-screen">{children}</div>
         </OnchainProviders>
       </body>
     </html>

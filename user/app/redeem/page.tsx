@@ -1,11 +1,14 @@
+"use client";
 import { unbounded } from "@/components/Fonts";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import React from "react";
 import Navbar from "@/components/Navbar";
+import { usePoints } from "@/store/player";
 
 export default function page() {
+  const { points } = usePoints();
   return (
     <div className="flex flex-col gap-y-12 text-cream w-full">
       <Navbar />
@@ -31,7 +34,7 @@ export default function page() {
                 <p
                   className={` text-4xl text-center font-bold text-purple-grey`}
                 >
-                  0
+                  {points}
                 </p>
               </div>
             </div>

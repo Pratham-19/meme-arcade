@@ -7,7 +7,7 @@ import Navbar from "@/components/Navbar";
 
 export default function page() {
   return (
-    <div className="flex flex-col gap-y-12 text-cream w-full">
+    <div className="flex flex-col gap-y-12 text-cream w-screen">
       <Navbar />
       <div className="w-full flex flex-col rounded-lg">
         <div className="w-11/12 md:w-full mx-auto flex items-center justify-between bg-black text-cream  py-4 px-5 ">

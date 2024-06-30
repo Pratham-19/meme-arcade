@@ -5,13 +5,17 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { unbounded } from "@/components/Fonts";
 import { cn } from "@/lib/utils";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
+import { usePoints } from "@/store/player";
 
 export default function CoinClicker() {
   const [score, setScore] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [showPlusTwo, setShowPlusTwo] = useState(false);
+  const router = useRouter();
+
+  const { updatePoints } = usePoints();
 
   const handleCoinClick = () => {
     if (isAnimating) return;
@@ -75,9 +79,15 @@ export default function CoinClicker() {
           height={500}
         />
       </div>
-      <Link href="/" className="absolute top-8 left-8">
+      <button
+        onClick={() => {
+          updatePoints(score / 100);
+          router.push("/");
+        }}
+        className="absolute top-8 left-8"
+      >
         <ArrowLeft className="size-6 text-white cursor-pointer" />
-      </Link>
+      </button>
     </div>
   );
 }
