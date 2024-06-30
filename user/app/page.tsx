@@ -26,7 +26,7 @@ export default function page() {
             </div>
           </div>
         </div>
-        <div className="mx-5 md:pl-0 py-6 flex flex-row w-full overflow-x-scroll gap-x-4 rounded-b-lg">
+        <div className="md:pl-6 py-6 flex flex-row w-full overflow-x-scroll gap-x-4 rounded-b-lg">
           {[
             {
               title: "The Flying Burd",
