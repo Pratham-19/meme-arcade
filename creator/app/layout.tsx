@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Image from "next/image";
 import { ThirdwebProvider } from "thirdweb/react";
+import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,6 +32,7 @@ export default function RootLayout({
             height={1000}
             className="fixed right-0 bottom-0 w-[30rem] -z-10 opacity-70"
           />
+          <Toaster />
         </ThirdwebProvider>
       </body>
     </html>
