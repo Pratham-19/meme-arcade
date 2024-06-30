@@ -5,324 +5,235 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import {
-	Form,
-	FormControl,
-	FormDescription,
-	FormField,
-	FormItem,
-	FormLabel,
-	FormMessage,
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
 } from "@/components/ui/form";
 import {
-	FileUploader,
-	FileUploaderContent,
-	FileUploaderItem,
-	FileInput,
+  FileUploader,
+  FileUploaderContent,
+  FileUploaderItem,
+  FileInput,
 } from "@/components/ui/FileUploader";
 
 import { Input } from "@/components/ui/input";
+import { useActiveWalletConnectionStatus } from "thirdweb/react";
 import { useRef, useState } from "react";
 import Image from "next/image";
 import { unbounded } from "@/components/Fonts";
+import { toast } from "sonner";
 
 const formSchema = z.object({
-	picture: z.string().min(2).max(50),
-	title: z.string().min(2).max(50),
-	desc: z.string().min(2).max(50),
-	date: z.string().min(2).max(50),
-	amount: z.number().min(2).max(50),
-	maxplayers: z.string().min(2).max(50),
+  picture: z.instanceof(File).optional(),
+  title: z
+    .string()
+    .min(2, { message: "Title must be at least 2 characters long" })
+    .max(50, { message: "Title must be at most 50 characters long" }),
+  date: z.string().optional(),
+  amount: z.string().refine((val) => !isNaN(Number(val)), {
+    message: "Amount must be a valid number",
+  }),
 });
-
 export default function OnboardForm() {
-	const [char1, setChar1] = useState<string>();
-	const [char2, setChar2] = useState<string>();
-	const [char3, setChar3] = useState<string>();
-	const [char4, setChar4] = useState<string>();
+  const [data, setData] = useState();
 
-	const char1Ref = useRef<HTMLInputElement>(null);
-	const char2Ref = useRef<HTMLInputElement>(null);
-	const char3Ref = useRef<HTMLInputElement>(null);
-	const char4Ref = useRef<HTMLInputElement>(null);
+  const status = useActiveWalletConnectionStatus();
 
-	const [promt, setPrompt] = useState("");
-	const [data, setData] = useState();
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      title: "",
+      date: "",
+      amount: "",
+    },
+  });
 
-	const [componentValues, setComponentValues] = useState({
-		"1": null,
-		"2": null,
-		"3": null,
-		"4": null,
-	});
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    if (status !== "connected") {
+      toast.error("Please connect your wallet");
+      return;
+    }
+    console.log(values);
+  }
+  const [files, setFiles] = useState<File[] | null>([]);
 
-	const form = useForm<z.infer<typeof formSchema>>({
-		resolver: zodResolver(formSchema),
-		defaultValues: {
-			picture: "",
-			title: "",
-			date: "",
-			amount: 0,
-			maxplayers: "",
-		},
-	});
+  const dropzone = {
+    accept: {
+      "image/*": [".jpg", ".jpeg", ".png"],
+    },
+    multiple: true,
+    maxFiles: 4,
+    maxSize: 1 * 1024 * 1024,
+  };
 
-	function onSubmit(values: z.infer<typeof formSchema>) {
-		console.log(values);
-	}
-	const [files, setFiles] = useState<File[] | null>([]);
+  return (
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="grid grid-cols-2 gap-x-10 text-purple-800"
+      >
+        <div className={`${unbounded.className} w-full flex flex-col gap-y-8`}>
+          <div className="flex flex-col gap-y-6">
+            <p>{data}</p>
+            <h5 className={` text-4xl font-black text-purple-800`}>
+              Add character:
+            </h5>
+            <div className="flex gap-x-6">
+              <FormField
+                control={form.control}
+                name="picture"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <FileUploader
+                        value={files}
+                        onValueChange={setFiles}
+                        dropzoneOptions={dropzone}
+                      >
+                        <FileInput {...field}>
+                          <div className="flex flex-col gap-y-2 items-center justify-center size-40 text-center border-[3px] border-cream-800 border-dashed bg-cream rounded-md">
+                            <Image
+                              src="/face.svg"
+                              alt="alt"
+                              width={500}
+                              height={500}
+                              className="w-10"
+                            />
+                            <p className="text-purple-grey">
+                              Add memecoin picture
+                            </p>
+                          </div>
+                        </FileInput>
+                        <FileUploaderContent className="flex items-center flex-row gap-2">
+                          {files?.map((file, i) => (
+                            <FileUploaderItem
+                              key={i}
+                              index={i}
+                              className="size-20 p-0 rounded-md overflow-hidden"
+                              aria-roledescription={`file ${i + 1} containing ${
+                                file.name
+                              }`}
+                            >
+                              <Image
+                                src={URL.createObjectURL(file)}
+                                alt={file.name}
+                                height={80}
+                                width={80}
+                                className="size-20 p-0"
+                              />
+                            </FileUploaderItem>
+                          ))}
+                        </FileUploaderContent>
+                      </FileUploader>
+                    </FormControl>
 
-	const dropzone = {
-		accept: {
-			"image/*": [".jpg", ".jpeg", ".png"],
-		},
-		multiple: true,
-		maxFiles: 4,
-		maxSize: 1 * 1024 * 1024,
-	};
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="flex flex-col gap-y-8">
+              <h5 className="text-4xl font-black text-purple-800">
+                Game description:{" "}
+              </h5>
+              <FormField
+                control={form.control}
+                name="title"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Game Title*</FormLabel>
+                    <FormControl>
+                      <Input
+                        className="bg-pearl border border-purple-grey-800 ring-none focus-visible:ring-none"
+                        placeholder="Type link"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-	const components: {
-		name: string;
-		value: string | undefined;
-		setValue: React.Dispatch<React.SetStateAction<string | undefined>>;
-		ref: React.MutableRefObject<HTMLInputElement | null>;
-	}[] = [
-		{
-			name: "1",
-			value: char1,
-			setValue: setChar1,
-			ref: char1Ref,
-		},
-		{
-			name: "2",
-			value: char2,
-			setValue: setChar2,
-			ref: char2Ref,
-		},
-		{
-			name: "3",
-			value: char3,
-			setValue: setChar3,
-			ref: char3Ref,
-		},
-		{
-			name: "4",
-			value: char4,
-			setValue: setChar4,
-			ref: char4Ref,
-		},
-	];
-	const fetchImage = async () => {
-		const response = await fetch("/api/route", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({ promt }),
-		});
-
-		const data = await response.json();
-		setData(data);
-	};
-
-	console.log(data);
-
-	return (
-		<Form {...form}>
-			<form
-				onSubmit={form.handleSubmit(onSubmit)}
-				className="grid grid-cols-2 gap-x-10 text-purple-800"
-			>
-				<div
-					className={`${unbounded.className} w-full flex flex-col gap-y-8`}
-				>
-					<div className="flex flex-col gap-y-6">
-						<p>{data}</p>
-						<h5 className={` text-4xl font-black text-purple-800`}>
-							Create character:
-						</h5>
-						<div className="flex gap-x-6">
-							<FormField
-								control={form.control}
-								name="picture"
-								render={({ field }) => (
-									<FormItem>
-										<FormControl>
-											<FileUploader
-												value={files}
-												onValueChange={setFiles}
-												dropzoneOptions={dropzone}
-											>
-												<FileInput {...field}>
-													<div className="flex flex-col gap-y-2 items-center justify-center size-40 text-center border-[3px] border-cream-800 border-dashed bg-cream rounded-md">
-														<Image
-															src="/face.svg"
-															alt="alt"
-															width={500}
-															height={500}
-															className="w-10"
-														/>
-														<p className="text-purple-grey">
-															Add memecoin picture
-														</p>
-													</div>
-												</FileInput>
-												<FileUploaderContent className="flex items-center flex-row gap-2">
-													{files?.map((file, i) => (
-														<FileUploaderItem
-															key={i}
-															index={i}
-															className="size-20 p-0 rounded-md overflow-hidden"
-															aria-roledescription={`file ${
-																i + 1
-															} containing ${
-																file.name
-															}`}
-														>
-															<Image
-																src={URL.createObjectURL(
-																	file
-																)}
-																alt={file.name}
-																height={80}
-																width={80}
-																className="size-20 p-0"
-															/>
-														</FileUploaderItem>
-													))}
-												</FileUploaderContent>
-											</FileUploader>
-										</FormControl>
-
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-							<div className="flex flex-wrap gap-x-4">
-								<Input
-									className="bg-pearl border border-purple-grey-800 ring-none focus-visible:ring-none py-4"
-									placeholder="Type your prompt"
-									onChange={(e) => {
-										setPrompt(e.target.value);
-									}}
-								/>
-								<Button
-									type="button"
-									onClick={fetchImage}
-									className="flex items-center justify-center gap-x-2 w-fit font-bold h-fit text-lg px-6 border-2 border-purple-grey-600 bg-purple-grey text-purple-grey-600 p-2 rounded-md shadow-black shadow-md"
-								>
-									<Image
-										src="/drawing.svg"
-										alt="alt"
-										width={500}
-										height={500}
-										className="w-8"
-									/>
-									Generate
-								</Button>
-							</div>
-						</div>
-						<div className="flex flex-col gap-y-8">
-							<h5 className="text-4xl font-black text-purple-800">
-								Game description:{" "}
-							</h5>
-							<FormField
-								control={form.control}
-								name="title"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>Game Title*</FormLabel>
-										<FormControl>
-											<Input
-												className="bg-pearl border border-purple-grey-800 ring-none focus-visible:ring-none"
-												placeholder="Type link"
-												{...field}
-											/>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-
-							<FormField
-								control={form.control}
-								name="date"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>
-											Choose game over date:
-										</FormLabel>
-										<FormDescription>
-											*if none game will be over when
-											rewards are over
-										</FormDescription>
-										<FormControl>
-											<Input
-												className="bg-pearl border border-purple-grey-800 ring-none focus-visible:ring-none"
-												placeholder="DD MM YYYY"
-												{...field}
-											/>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-						</div>
-					</div>
-					<div className="flex flex-col gap-y-6">
-						<h5 className="text-4xl font-black text-purple-800">
-							Rewards Dynamics:
-						</h5>
-						<FormField
-							control={form.control}
-							name="amount"
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>Choose total*</FormLabel>
-									<FormControl>
-										<Input
-											className="bg-pearl border border-purple-grey-800 ring-none focus-visible:ring-none"
-											placeholder="Type amount (value in $COINTICKER)"
-											{...field}
-										/>
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-						<FormField
-							control={form.control}
-							name="maxplayers"
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>
-										Maximum Allowed Players:*
-									</FormLabel>
-									<FormControl>
-										<Input
-											className="bg-pearl border border-purple-grey-800 ring-none focus-visible:ring-none"
-											placeholder="Type amount (value in $COINTICKER)"
-											{...field}
-										/>
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-					</div>
-					<Button
-						type="submit"
-						className="w-fit rounded-lg text-lg mt-auto font-medium h-12 hover:bg-pink bg-pink border-2 shadow-sm shadow-pink-800 border-pink-800 text-pink-800"
-					>
-						Approve and Launch
-					</Button>
-				</div>
-				<div className="w-full flex flex-col gap-y-8">
-					<div className="flex flex-col gap-y-6 border-4 border-black p-6 rounded-xl">
+              <FormField
+                control={form.control}
+                name="date"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Choose game over date:</FormLabel>
+                    <FormDescription>
+                      *if none game will be over when rewards are over
+                    </FormDescription>
+                    <FormControl>
+                      <Input
+                        className="bg-pearl border border-purple-grey-800 ring-none focus-visible:ring-none"
+                        placeholder="DD MM YYYY"
+                        type="date"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+          </div>
+          <div className="flex flex-col gap-y-6">
+            <h5 className="text-4xl font-black text-purple-800">
+              Rewards Dynamics:
+            </h5>
+            <FormField
+              control={form.control}
+              name="amount"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Total Rewards*</FormLabel>
+                  <FormControl>
+                    <Input
+                      className="bg-pearl border border-purple-grey-800 ring-none focus-visible:ring-none"
+                      placeholder="Type amount (value in $USDC)"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            {/* <FormField
+              control={form.control}
+              name="maxplayers"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Maximum Allowed Players:*</FormLabel>
+                  <FormControl>
+                    <Input
+                      className="bg-pearl border border-purple-grey-800 ring-none focus-visible:ring-none"
+                      placeholder="Type amount (value in $COINTICKER)"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            /> */}
+          </div>
+          <Button
+            type="submit"
+            className="w-fit rounded-lg text-lg mt-auto font-medium h-12 hover:bg-pink bg-pink border-2 shadow-sm shadow-pink-800 border-pink-800 text-pink-800"
+          >
+            Approve and Launch
+          </Button>
+        </div>
+        <div className="w-full flex flex-col gap-y-8">
+          {/* <div className="flex flex-col gap-y-6 border-4 border-black p-6 rounded-xl">
 						<h5
 							className={`${unbounded.className} text-4xl font-semibold text-cream bg-purple p-4 rounded-xl`}
 						>
 							Choose Character
-						</h5>
+						</h5> 
 						<div className="bg-cream-800">
 							<div className="grid grid-cols-2 gap-4 p-8 justify-items-center rounded-xl  w-fit mx-auto">
 								{components.map((component, index) => (
@@ -423,44 +334,41 @@ export default function OnboardForm() {
 								))}
 							</div>
 						</div>
-					</div>
-					<div className={`${unbounded.className}`}>
-						<h6 className="text-4xl font-black">Links:</h6>
-						<div className="flex flex-col gap-y-4 pt-4">
-							{[
-								{
-									title: "website",
-									placeholder: "Website link",
-								},
-								{
-									title: "Contract address",
-									placeholder: "Type address",
-								},
-								{ title: "Twitter", placeholder: "Type link" },
-								{
-									title: "Discord",
-									placeholder: "Type invite link",
-								},
-								{
-									title: "Coingecko",
-									placeholder: "Type chart link",
-								},
-							].map((link, index) => (
-								<div
-									key={index}
-									className="flex flex-col gap-y-2"
-								>
-									<p className="text-base">{link.title}</p>
-									<Input
-										className="bg-pearl border border-purple-grey-800 ring-none focus-visible:ring-none"
-										placeholder={link.placeholder}
-									/>
-								</div>
-							))}
-						</div>
-					</div>
-				</div>
-			</form>
-		</Form>
-	);
+					</div> */}
+          <div className={`${unbounded.className}`}>
+            <h6 className="text-4xl font-black">Links:</h6>
+            <div className="flex flex-col gap-y-4 pt-4">
+              {[
+                {
+                  title: "website",
+                  placeholder: "Website link",
+                },
+                {
+                  title: "Contract address",
+                  placeholder: "Type address",
+                },
+                { title: "Twitter", placeholder: "Type link" },
+                {
+                  title: "Discord",
+                  placeholder: "Type invite link",
+                },
+                {
+                  title: "Coingecko",
+                  placeholder: "Type chart link",
+                },
+              ].map((link, index) => (
+                <div key={index} className="flex flex-col gap-y-2">
+                  <p className="text-base">{link.title}</p>
+                  <Input
+                    className="bg-pearl border border-purple-grey-800 ring-none focus-visible:ring-none"
+                    placeholder={link.placeholder}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </form>
+    </Form>
+  );
 }

@@ -3,7 +3,6 @@ import Image from "next/image";
 import React from "react";
 import { useActiveWalletConnectionStatus } from "thirdweb/react";
 import { coustard, unbounded } from "@/components/Fonts";
-import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
