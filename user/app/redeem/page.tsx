@@ -1,4 +1,6 @@
 "use client";
+
+import { useAccount, useWriteContract } from "wagmi";
 import { unbounded } from "@/components/Fonts";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,8 +10,38 @@ import Navbar from "@/components/Navbar";
 import { usePoints } from "@/store/player";
 import { useStore } from "@/hooks/useStore";
 
+import GameTokenDispensor from "../_lib/GameTokenDispenser.json";
+import { parseUnits } from "viem";
+
 export default function page() {
+  const { writeContract } = useWriteContract();
+
   const store = useStore(usePoints, (state) => state);
+
+  const [amount, setAmount] = React.useState(0);
+  const { isConnected } = useAccount();
+
+  const handleRedeem = () => {
+    if (amount <= 0) {
+      alert("Amount must be greater than 0");
+      return;
+    }
+    if ((store?.points ?? 0) < amount) {
+      alert("You don't have enough points to redeem");
+      return;
+    }
+
+    const tokenAmount = amount / 100;
+    writeContract({
+      abi: GameTokenDispensor.abi,
+      address: GameTokenDispensor.address as `0x${string}`,
+      functionName: "claimTokens",
+      args: [parseUnits(tokenAmount.toString(), 6).toString()],
+    });
+    setTimeout(() => {
+      store?.updatePoints(store?.points - amount);
+    }, 1000);
+  };
 
   return (
     <div className="flex flex-col gap-y-12 text-cream w-full">
@@ -48,11 +80,16 @@ export default function page() {
               Amount to withdraw
             </h6>
             <Input
-              className="bg-transparent border border-purple-grey-800 ring-none focus-visible:ring-none"
+              className="bg-transparent border border-purple-grey-800 ring-none focus-visible:ring-none text-black"
               placeholder="Amount"
+              onChange={(e) => setAmount(Number(e.target.value))}
             />
-            <Button className="w-fit mt-4 rounded-lg text-lg font-medium h-12 hover:bg-pink bg-pink border-2 shadow-sm shadow-pink-800 border-pink-800 text-pink-800">
-              Approve and Launch
+            <Button
+              className="w-fit mt-4 rounded-lg text-lg font-medium h-12 hover:bg-pink bg-pink border-2 shadow-sm shadow-pink-800 border-pink-800 text-pink-800 "
+              onClick={handleRedeem}
+              disabled={!isConnected}
+            >
+              {isConnected ? "Approve and Launch" : "Connect Wallet to Redeem"}
             </Button>
           </div>
         </div>
