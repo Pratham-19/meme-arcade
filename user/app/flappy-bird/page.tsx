@@ -1,11 +1,12 @@
 "use client";
-import { useEffect, useState, useCallback, useRef } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+
+import { useInterval } from "@/hooks/useInterval";
 import { useStore } from "@/hooks/useStore";
 import { usePoints } from "@/store/player";
-import { useInterval } from "@/hooks/useInterval";
+import { ArrowLeft } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useState, useCallback, useRef } from "react";
 
 interface Pillar {
   top: number;
@@ -149,35 +150,15 @@ export default function FloppyBird() {
     }
   }, []);
 
-  const handleTouchStart = useCallback(() => {
-    isJumpingRef.current = true;
-  }, []);
-
-  const handleTouchEnd = useCallback(() => {
-    isJumpingRef.current = false;
-  }, []);
-
   useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);
     window.addEventListener("keyup", handleKeyUp);
 
-    const gameArea = document.querySelector(".game-area");
-
-    if (gameArea) {
-      gameArea.addEventListener("touchstart", handleTouchStart);
-      gameArea.addEventListener("touchend", handleTouchEnd);
-    }
-
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("keyup", handleKeyUp);
-
-      if (gameArea) {
-        gameArea.removeEventListener("touchstart", handleTouchStart);
-        gameArea.removeEventListener("touchend", handleTouchEnd);
-      }
     };
-  }, [handleKeyDown, handleKeyUp, handleTouchStart, handleTouchEnd]);
+  }, [handleKeyDown, handleKeyUp]);
 
   useInterval(() => {
     if (!gameOver) {

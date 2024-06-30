@@ -7,7 +7,7 @@ import Navbar from "@/components/Navbar";
 
 export default function page() {
   return (
-    <div className="flex flex-col gap-y-12 text-cream w-screen">
+    <main className="flex w-screen flex-col gap-y-12 text-cream">
       <Navbar />
       <div className="w-full flex flex-col rounded-lg">
         <div className="w-11/12 md:w-full mx-auto flex items-center justify-between bg-black text-cream  py-4 px-5 ">
@@ -68,6 +68,11 @@ export default function page() {
               image: "/dino.jpg",
               slug: "dino",
             },
+            {
+              title: "Block Fit",
+              image: "/tetris.jpg",
+              slug: "tetris",
+            },
           ].map((item, index) => (
             <Card
               key={index}
@@ -99,9 +104,9 @@ export default function page() {
         <div className="pl-6 py-6 flex flex-row w-full overflow-x-scroll gap-x-4 rounded-b-lg">
           {[
             {
-              title: "Block Fit",
-              image: "/tetris.jpg",
-              slug: "tetris",
+              title: "Just Push",
+              image: "/just-push.jpg",
+              slug: "just-push",
             },
           ].map((item, key) => (
             <Card
@@ -113,6 +118,6 @@ export default function page() {
           ))}
         </div>
       </div>
-    </div>
+    </main>
   );
 }
