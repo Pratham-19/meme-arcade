@@ -3,20 +3,15 @@ import Image from "next/image";
 import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Button } from "./ui/button";
-import { coustard, unbounded } from "@/components/Fonts";
-import { ConnectButton, darkTheme } from "thirdweb/react";
-
-import { createWallet } from "thirdweb/wallets";
-import { defineChain } from "thirdweb";
-import { baseSepolia } from "thirdweb/chains";
-import { client } from "@/app/_lib/thirdweb/client";
+import { coustard } from "@/components/Fonts";
+import ConnectWallet from "./ConnectWallet";
+import { useAccount } from "wagmi";
 
 export default function Navbar() {
 	const path = usePathname();
 	console.log(path);
-	const wallet = [createWallet("com.coinbase.wallet")];
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
+	const { isConnected } = useAccount();
 
 	return (
 		<div className="bg-black w-full">
@@ -31,41 +26,23 @@ export default function Navbar() {
 							className="w-48"
 						/>
 					</Link>
-					{path !== "/" &&
-						[
-							{ title: "creator", href: "/creator" },
-							// { title: "play", href: "/play" },
-							{ title: "dashboard", href: "/dashboard" },
-						].map(({ title, href }, index) => (
-							<Link
-								key={index}
-								className={`${
-									path.includes(href)
-										? "bg-pink border-none"
-										: "bg-none"
-								}  text-pearl px-8 py-2 rounded-lg border border-pearl/30 hidden md:block ${
-									coustard.className
-								}`}
-								href={href}
-							>
-								{title}
-							</Link>
-						))}
+					{isConnected && (
+						<Link
+							href="/redeem"
+							className={`${
+								path.includes("/redeem")
+									? "bg-pink border-none"
+									: "bg-none"
+							}  text-pearl px-6 py-2.5 rounded-lg border border-pearl/30 hidden md:block ${
+								coustard.className
+							}`}
+						>
+							Withdraw Earnings
+						</Link>
+					)}
 				</div>
 				<div className="hidden md:block">
-					<ConnectButton
-						client={client}
-						wallets={wallet}
-						chain={defineChain(baseSepolia)}
-						theme={darkTheme({
-							colors: {
-								primaryButtonBg: "#161616",
-								primaryButtonText: "#dfdfdf",
-								selectedTextBg: "#161616",
-								borderColor: "#161616",
-							},
-						})}
-					/>
+					<ConnectWallet />
 				</div>
 				<div className="md:hidden">
 					<button
@@ -98,19 +75,7 @@ export default function Navbar() {
 					</button>
 					{isMenuOpen && (
 						<div className="absolute right-0 mt-2 mr-2 space-y-2 pb-4 w-48 bg-black border border-purple-grey-800 rounded-md shadow-lg z-20">
-							<ConnectButton
-								client={client}
-								wallets={wallet}
-								chain={defineChain(baseSepolia)}
-								theme={darkTheme({
-									colors: {
-										primaryButtonBg: "#161616",
-										primaryButtonText: "#dfdfdf",
-										selectedTextBg: "#161616",
-										borderColor: "#161616",
-									},
-								})}
-							/>
+							<ConnectWallet />
 							<Link href="/redeem" className="text-pearl px-4">
 								Withdraw Earnings
 							</Link>
