@@ -6,8 +6,8 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import { coustard, unbounded } from "@/components/Fonts";
-import { Button } from "@/components/ui/button";
 import UserRoles from "@/components/UserRoles";
+import Autoplay from "embla-carousel-autoplay";
 export default function Home() {
   return (
     <div className="flex flex-col md:gap-y-10 py-8">
@@ -31,11 +31,7 @@ export default function Home() {
                 Players all over the world, games from all over the metaverse.
               </p>
             </div>
-            {/* <div
-						className={`${unbounded.className} flex items-center gap-x-4 border-[6px] rounded-md text-purple-800 border-purple-600 bg-custom-gradient px-4 md:px-6 md:pr-10 py-4 text-3xl font-black md:w-[18rem]`}
-					>
-						More than 900 games to choose
-					</div> */}
+
             <Image
               src="/memearcade-hero.png"
               alt="alt"
@@ -46,7 +42,7 @@ export default function Home() {
           </div>
           <div className="hidden md:flex flex-col md:flex-row items-center justify-evenly pb-10">
             <Image
-              src="/roadfighter-home.png"
+              src="/just-push.jpg"
               alt="alt"
               className="w-[26rem] h-fit border-l-[6px] border-y-[6px] border-purple-grey rounded-l z-20"
               width={1000}
@@ -61,11 +57,11 @@ export default function Home() {
                 </p>
               </div>
               <Carousel
-                // plugins={[
-                // 	Autoplay({
-                // 		delay: 4000,
-                // 	}),
-                // ]}
+                plugins={[
+                  Autoplay({
+                    delay: 4000,
+                  }),
+                ]}
                 className="w-[25rem] "
               >
                 <CarouselContent>
@@ -80,7 +76,7 @@ export default function Home() {
                   </CarouselItem>
                   <CarouselItem>
                     <Image
-                      src="/poker.png"
+                      src="/dino.jpg"
                       alt="alt"
                       className="h-full w-full"
                       width={1000}
@@ -89,7 +85,7 @@ export default function Home() {
                   </CarouselItem>
                   <CarouselItem>
                     <Image
-                      src="/carfighter.png"
+                      src="/tetris.jpg"
                       alt="alt"
                       className="h-full w-full"
                       width={1000}
@@ -107,7 +103,7 @@ export default function Home() {
               />
             </div>
             <Image
-              src="/poker-home.png"
+              src="/dino.jpg"
               alt="alt"
               className="w-[26rem] h-fit border-r-[6px] border-y-[6px] border-purple-grey rounded-r z-20"
               width={1000}
