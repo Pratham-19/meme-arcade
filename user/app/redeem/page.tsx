@@ -6,9 +6,11 @@ import Image from "next/image";
 import React from "react";
 import Navbar from "@/components/Navbar";
 import { usePoints } from "@/store/player";
+import { useStore } from "@/hooks/useStore";
 
 export default function page() {
-  const { points } = usePoints();
+  const store = useStore(usePoints, (state) => state);
+
   return (
     <div className="flex flex-col gap-y-12 text-cream w-full">
       <Navbar />
@@ -34,7 +36,7 @@ export default function page() {
                 <p
                   className={` text-4xl text-center font-bold text-purple-grey`}
                 >
-                  {points}
+                  {store?.points.toFixed(2) ?? 0}
                 </p>
               </div>
             </div>

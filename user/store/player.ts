@@ -2,6 +2,7 @@ import { create } from "zustand";
 
 import { getRandomTetrics } from "@/lib/tetrics";
 import { IPlayer, Tetrino } from "@/types/Game";
+import { persist } from "zustand/middleware";
 
 interface PlayerStore {
   player: IPlayer;
@@ -55,7 +56,14 @@ interface PointStore {
   updatePoints: (val: number) => void;
 }
 
-export const usePoints = create<PointStore>((set) => ({
-  points: 0,
-  updatePoints: (val) => set((state) => ({ points: state.points + val })),
-}));
+export const usePoints = create<PointStore>()(
+  persist(
+    (set) => ({
+      points: 0,
+      updatePoints: (val) => set((state) => ({ points: state.points + val })),
+    }),
+    {
+      name: "points",
+    }
+  )
+);

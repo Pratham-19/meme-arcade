@@ -1,6 +1,7 @@
 "use client";
 
 import { useInterval } from "@/hooks/useInterval";
+import { useStore } from "@/hooks/useStore";
 import { usePoints } from "@/store/player";
 import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
@@ -30,7 +31,7 @@ export default function FloppyBird() {
   const [gameSpeed, setGameSpeed] = useState(PILLAR_SPEED);
   const isJumpingRef = useRef(false);
   const [score, setScore] = useState(0);
-  const { updatePoints } = usePoints();
+  const store = useStore(usePoints, (state) => state);
 
   const getRandomInt = useCallback(
     (height: number, width: number, delta: number): Pillar => {
@@ -119,9 +120,9 @@ export default function FloppyBird() {
         const boundary = checkBoundary(birdPositionRef.current);
 
         if (boundary || collision) {
+          store?.updatePoints(score / 5);
           setGameOver(true);
           clearInterval(gameLoop);
-          updatePoints(score / 5);
         }
 
         return prevPillars;
@@ -135,6 +136,7 @@ export default function FloppyBird() {
     if (e.key === "ArrowUp" || e.key === " ") {
       isJumpingRef.current = true;
     } else if (e.key.toLowerCase() === "r") {
+      store?.updatePoints(score / 5);
       setGameOver(false);
       setPillars([]);
       birdPositionRef.current = { x: BIRD_X, y: 200 };

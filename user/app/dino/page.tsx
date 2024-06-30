@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { usePoints } from "@/store/player";
+import { useStore } from "@/hooks/useStore";
 
 const INITIAL_TREE_DIFFICULTY = 4;
 const WIDTH = 1200;
@@ -29,7 +30,7 @@ export default function DinoGame() {
   const [gameOver, setGameOver] = useState(false);
   const playerBlock = useRef<HTMLImageElement | null>(null);
 
-  const { updatePoints } = usePoints();
+  const store = useStore(usePoints, (state) => state);
 
   const generateBlock = useCallback(
     (pos: number) => ({
@@ -74,7 +75,6 @@ export default function DinoGame() {
             playerTop < TREE_HEIGHT
           ) {
             setGameOver(true);
-            updatePoints(score / 10);
             return prev;
           }
         }
@@ -136,6 +136,7 @@ export default function DinoGame() {
   }, [handleKeyDown]);
 
   const handleRestart = () => {
+    store?.updatePoints(score / 10);
     setGameOver(false);
     setScore(0);
     setGameSpeed(INITIAL_GAME_SPEED);
