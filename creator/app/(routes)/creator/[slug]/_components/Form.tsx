@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
+import { upload } from "thirdweb/storage";
 import {
   Form,
   FormControl,
@@ -21,11 +22,21 @@ import {
 } from "@/components/ui/FileUploader";
 
 import { Input } from "@/components/ui/input";
-import { useActiveWalletConnectionStatus } from "thirdweb/react";
+import {
+  useActiveWalletConnectionStatus,
+  useActiveAccount,
+} from "thirdweb/react";
+import { sendAndConfirmTransaction } from "thirdweb";
 import { useRef, useState } from "react";
 import Image from "next/image";
 import { unbounded } from "@/components/Fonts";
 import { toast } from "sonner";
+import {
+  client,
+  gameTokenContract,
+  usdcContract,
+} from "@/app/_lib/thirdweb/client";
+import { prepareContractCall, toUnits } from "thirdweb";
 
 const formSchema = z.object({
   picture: z.instanceof(File).optional(),
@@ -42,6 +53,7 @@ export default function OnboardForm() {
   const [data, setData] = useState();
 
   const status = useActiveWalletConnectionStatus();
+  const activeAccount = useActiveAccount();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -52,12 +64,46 @@ export default function OnboardForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    if (status !== "connected") {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    if (status !== "connected" || !activeAccount) {
       toast.error("Please connect your wallet");
       return;
     }
-    console.log(values);
+    let imgUrl;
+    if (files?.length) {
+      const uris = await upload({
+        client,
+        files: [files[0]],
+      });
+      console.log(uris);
+      const ipfsHash = uris.slice(7);
+      imgUrl = `https://cloudflare-ipfs.com/ipfs/${ipfsHash}`;
+    }
+
+    const tx1 = prepareContractCall({
+      contract: usdcContract,
+      method: "function approve(address spender,uint256 amount)",
+      params: [
+        "0xDE47587B91E2dd2953d6C33839D8E9efd1F81014",
+        toUnits(values.amount, 6),
+      ],
+    });
+    const receipt = await sendAndConfirmTransaction({
+      transaction: tx1,
+      account: activeAccount,
+    });
+
+    const tx = prepareContractCall({
+      contract: gameTokenContract,
+      method: "function depositTokens(uint256 amount)",
+      params: [toUnits(values.amount, 6)],
+    });
+    const receipt2 = await sendAndConfirmTransaction({
+      transaction: tx,
+      account: activeAccount,
+    });
+
+    toast.success("Game has been created successfully");
   }
   const [files, setFiles] = useState<File[] | null>([]);
 
