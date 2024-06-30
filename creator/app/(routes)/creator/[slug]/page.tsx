@@ -61,7 +61,7 @@ export default function page({ params }: { params: { slug: string } }) {
       </div>
       <div className="w-full border-4 border-purple-grey-800 rounded-xl py-10 px-16 bg-pearl">
         <div className="flex flex-col gap-y-12">
-          <OnboardForm />
+          <OnboardForm slug={params.slug} />
         </div>
       </div>
     </div>

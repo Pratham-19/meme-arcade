@@ -12,6 +12,6 @@ model Game {
   id    String  @id @default(auto()) @map("_id") @db.ObjectId
   title String  
   img  String?
-  expiry DateTime
+  slug  String
   createdAt DateTime @default(now())
 }

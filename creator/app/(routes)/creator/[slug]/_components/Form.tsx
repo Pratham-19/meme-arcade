@@ -37,6 +37,7 @@ import {
   usdcContract,
 } from "@/app/_lib/thirdweb/client";
 import { prepareContractCall, toUnits } from "thirdweb";
+import prisma from "@/prisma";
 
 const formSchema = z.object({
   picture: z.instanceof(File).optional(),
@@ -49,7 +50,7 @@ const formSchema = z.object({
     message: "Amount must be a valid number",
   }),
 });
-export default function OnboardForm() {
+export default function OnboardForm({ slug }: { slug: string }) {
   const [data, setData] = useState();
 
   const status = useActiveWalletConnectionStatus();
@@ -101,6 +102,14 @@ export default function OnboardForm() {
     const receipt2 = await sendAndConfirmTransaction({
       transaction: tx,
       account: activeAccount,
+    });
+
+    await prisma.game.create({
+      data: {
+        title: values.title,
+        img: imgUrl,
+        slug,
+      },
     });
 
     toast.success("Game has been created successfully");
