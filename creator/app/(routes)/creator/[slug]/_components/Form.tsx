@@ -104,12 +104,15 @@ export default function OnboardForm({ slug }: { slug: string }) {
       account: activeAccount,
     });
 
-    await prisma.game.create({
-      data: {
+    const response = await fetch("/api/games", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
         title: values.title,
         img: imgUrl,
-        slug,
-      },
+      }),
     });
 
     toast.success("Game has been created successfully");
