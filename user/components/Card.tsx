@@ -32,7 +32,7 @@ export default function Card({
 
   return (
     <>
-      <div className="border-4 border-purple-grey-800 rounded-t-md rounded-b-lg max-w-72">
+      <div className="border-4 border-purple-grey-800 rounded-t-md rounded-b-lg w-64 max-w-72">
         <div className="p-4 bg-purple-grey">
           <Image
             src={image}

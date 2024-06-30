@@ -65,37 +65,7 @@ export default function page() {
           {[
             {
               title: "Pepe Run",
-              image: "/carfighter.png",
-              slug: "dino",
-            },
-            {
-              title: "Racing Kars",
-              image: "/carfighter.png",
-              slug: "dino",
-            },
-            {
-              title: "Racing Kars",
-              image: "/carfighter.png",
-              slug: "dino",
-            },
-            {
-              title: "Racing Kars",
-              image: "/carfighter.png",
-              slug: "dino",
-            },
-            {
-              title: "Racing Kars",
-              image: "/carfighter.png",
-              slug: "dino",
-            },
-            {
-              title: "Racing Kars",
-              image: "/carfighter.png",
-              slug: "dino",
-            },
-            {
-              title: "Racing Kars",
-              image: "/carfighter.png",
+              image: "/dino.jpg",
               slug: "dino",
             },
           ].map((item, index) => (
@@ -129,9 +99,9 @@ export default function page() {
         <div className="pl-6 py-6 flex flex-row w-full overflow-x-scroll gap-x-4 rounded-b-lg">
           {[
             {
-              title: "Made my day",
-              image: "/poker.png",
-              slug: "pooker",
+              title: "Block Fit",
+              image: "/tetris.jpg",
+              slug: "tetris",
             },
           ].map((item, key) => (
             <Card
