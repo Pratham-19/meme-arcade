@@ -18,7 +18,7 @@ const FPS = 60;
 
 const slowRiseFastDrop = cubicBezier(0.4, 0.0, 1, 0.5);
 
-export default function DinoGame({ playerImg }: { playerImg?: string }) {
+export default function DinoGame() {
   const [_, setTreeDifficulty] = useState(INITIAL_TREE_DIFFICULTY);
   const playerPosition = useRef({ x: 15, y: 0 });
   const controls = useAnimationControls();
@@ -167,7 +167,7 @@ export default function DinoGame({ playerImg }: { playerImg?: string }) {
       <div className="w-[1200px] h-[400px] mt-[100px] border-8 border-pearl rounded-t-md relative overflow-hidden bg-[url(/background-dino.png)] bg-no-repeat bg-cover aspect-video bg-center ">
         {pillarBlocks}
         <motion.img
-          src={playerImg ?? "/runner.gif"}
+          src="/runner.gif"
           alt="runner"
           width={200}
           height={265}
